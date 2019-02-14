@@ -18,7 +18,7 @@ class CheckAuthor
     public function handle($request, Closure $next)
     {
         if (!Auth::user() || !Auth::user()->hasRole(Role::AUTHOR)) {
-            return abort(404);
+            return abort(401);
         }
 
         return $next($request);

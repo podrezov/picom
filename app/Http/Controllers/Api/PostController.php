@@ -26,7 +26,7 @@ class PostController extends Controller
     {
         $user = Auth::user();
         if ($user->cant('create', Post::class)) {
-            return abort(404);
+            return abort(401);
         }
 
         $post = $user->posts()->create([
@@ -40,7 +40,7 @@ class PostController extends Controller
     public function update(PostRequest $request, Post $post)
     {
         if (Auth::user()->cant('updateAndDelete', $post)) {
-            return abort(404);
+            return abort(401);
         }
 
         $post->update([
@@ -53,8 +53,8 @@ class PostController extends Controller
 
     public function delete(Post $post)
     {
-        if (!$post || Auth::user()->cant('updateAndDelete', $post)) {
-            return abort(404);
+        if (Auth::user()->cant('updateAndDelete', $post)) {
+            return abort(401);
         }
 
         $post = $post->delete();
