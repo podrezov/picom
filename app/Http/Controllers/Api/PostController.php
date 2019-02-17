@@ -25,6 +25,7 @@ class PostController extends Controller
     public function store(PostRequest $request)
     {
         $user = Auth::user();
+
         if ($user->cant('create', Post::class)) {
             return abort(401);
         }
